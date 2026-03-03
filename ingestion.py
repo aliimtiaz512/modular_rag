@@ -6,7 +6,6 @@ from urllib.parse import urljoin, urlparse
 import chromadb
 from langchain_text_splitters import TokenTextSplitter
 
-# We must initialize to a persistent client so the data survives across script runs
 client = chromadb.PersistentClient(path="./chroma_db")
 collection = client.get_or_create_collection(name="feb24")
 
@@ -62,13 +61,11 @@ def crawl_and_extract(base_url, max_urls=75):
         print(f"Crawling ({len(visited_urls)+1}/{max_urls}): {current_url}")
         visited_urls.add(current_url)
         
-        # 1. Extract the text on this page FIRST
         try:
             response = requests.get(current_url, timeout=10)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, 'html.parser')
-            
-            # Clean the noise (footers, headers, scripts, etc.)
+        
             for junk in soup(["script", "style", "nav", "footer", "header"]):
                 junk.decompose()
                 
@@ -81,13 +78,12 @@ def crawl_and_extract(base_url, max_urls=75):
         except Exception as e:
             print(f"  -> Skipping extraction for {current_url}: {e}")
             
-        # 2. Get all new links on this page
+        
         new_links = get_all_website_links(current_url)
         for link in new_links:
             if link not in visited_urls and link not in urls_to_visit:
                 urls_to_visit.append(link)
                 
-        # Ethical delay to avoid DDOSing the server
         time.sleep(1)
         
     print(f"Crawler finished. Visited {len(visited_urls)} total pages.")
@@ -97,34 +93,27 @@ def crawl_and_extract(base_url, max_urls=75):
 if __name__ == "__main__":
     base_website_url = "https://rizviz.com.pk/"
     
-    # 1. Crawl and gather all text data
     all_site_data = crawl_and_extract(base_website_url, max_urls=50)
     
     print("\nStarting Ingestion Process into Vector DB...")
     
-    # 2. Initialize the text splitter
-    token_splitter = TokenTextSplitter(chunk_size=512, chunk_overlap=50)
+    token_splitter = TokenTextSplitter(chunk_size=700, chunk_overlap=150)
     
     total_chunks_added = 0
     all_chunks = []
     all_metadatas = []
     all_ids = []
     
-    # 3. Process the data page by page
     for url, page_text in all_site_data.items():
-        # Split the text of this specific URL into chunks
         chunks = token_splitter.split_text(page_text)
         
         if chunks:
             for i, chunk in enumerate(chunks):
-                # Create a unique ID combining the URL name and chunk index
                 safe_url_name = url.replace("https://", "").replace("http://", "").replace("/", "_").strip("_")
                 chunk_id = f"chunk_{safe_url_name}_{i}"
                 
-                # Append to our master lists
                 all_chunks.append(chunk)
                 
-                # Critical: Save the source URL as metadata so the LLM knows where it came from
                 all_metadatas.append({"source_url": url})
                 
                 all_ids.append(chunk_id)
