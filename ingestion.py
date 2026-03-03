@@ -29,10 +29,8 @@ def get_all_website_links(url):
             if href == "" or href is None:
                 continue
             
-            # Resolve relative URLs
             href = urljoin(url, href)
             
-            # Clean URL
             parsed_href = urlparse(href)
             href = parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
             
