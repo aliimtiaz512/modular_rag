@@ -1,11 +1,21 @@
 from groq import Groq
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+# Load locally from .env if available (for development)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-api_key=os.getenv("GROQ_API_KEY")
-client=Groq(api_key=api_key)
+# Try Streamlit secrets first (for Streamlit Cloud), then fall back to env var
+try:
+    import streamlit as st
+    api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+except Exception:
+    api_key = os.getenv("GROQ_API_KEY")
+
+client = Groq(api_key=api_key)
 
 def generate_query(query:str, system_prompt:str):
     completion=client.chat.completions.create(
