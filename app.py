@@ -6,11 +6,8 @@ st.set_page_config(
     page_title="Rizvi International Impex",
     layout="wide",
     page_icon="🏢",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
-
-if "show_sidebar" not in st.session_state:
-    st.session_state.show_sidebar = False
 
 # ── LIGHT THEME ──────────────────────────────────────────────────────────────
 st.markdown("""
@@ -23,30 +20,12 @@ st.markdown("""
         color: #1e293b !important;
     }
 
-    /* Hide clutter but NOT the sidebar arrow toggle */
+    /* Hide clutter */
     #MainMenu { visibility: hidden; }
     footer    { visibility: hidden; }
-    [data-testid="stToolbar"]     { display: none; }
-    [data-testid="stDecoration"]  { display: none; }
-    [data-testid="stStatusWidget"]{ display: none; }
-
-    /* ── Custom hamburger menu button ── */
-    div[data-testid="column"]:first-child .stButton > button {
-        background-color: #1e293b !important;
-        color:            #ffffff !important;
-        font-size:        18px   !important;
-        padding:          8px 16px !important;
-        border-radius:    10px   !important;
-        width:            auto   !important;
-        min-width:        50px   !important;
-        box-shadow:       0 2px 10px rgba(0,0,0,0.2) !important;
-        line-height:      1      !important;
-    }
-    div[data-testid="column"]:first-child .stButton > button:hover {
-        background-color: #0f172a !important;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
-        transform: none !important;
-    }
+    [data-testid="stToolbar"]      { display: none; }
+    [data-testid="stDecoration"]   { display: none; }
+    [data-testid="stStatusWidget"] { display: none; }
 
     /* ── Title ── */
     h1 {
@@ -155,21 +134,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── HEADER ───────────────────────────────────────────────────────────────────
-menu_col, title_col = st.columns([1, 11])
-with menu_col:
-    if st.button("☰", key="menu_toggle", help="Open / close the menu"):
-        st.session_state.show_sidebar = not st.session_state.show_sidebar
-        st.rerun()
-with title_col:
-    st.markdown("""
-    <div style="padding: 4px 0 6px 0;">
-        <h1 style="margin:0;">🏢 Rizvi International Impex</h1>
-        <p style="font-size:15px; margin:4px 0 0; color:#64748b;">
-            Ask anything — powered by your internal knowledge base &amp; live web data.
-        </p>
-    </div>
-    <hr style="margin: 14px 0 20px;" />
-    """, unsafe_allow_html=True)
+st.markdown("""
+<div style="padding: 18px 0 6px 0;">
+    <h1>🏢 Rizvi International Impex</h1>
+    <p style="font-size:15px; margin:4px 0 0; color:#64748b;">
+        Ask anything — powered by your internal knowledge base &amp; live web data.
+    </p>
+</div>
+<hr style="margin: 14px 0 20px;" />
+""", unsafe_allow_html=True)
 
 # ── CHAT STATE ───────────────────────────────────────────────────────────────
 if "messages" not in st.session_state:
@@ -182,8 +155,7 @@ if not st.session_state.messages:
         <div style="font-size:52px; margin-bottom:10px;">💬</div>
         <p style="font-size:18px; font-weight:600; color:#64748b; margin:0;">No messages yet</p>
         <p style="font-size:14px; margin-top:6px; color:#94a3b8;">
-            Click the <strong style="color:#1e293b;">☰ button</strong> at the top-left to open the menu,
-            then type a question below.
+            Type a question below to get started.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -209,8 +181,7 @@ if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
     st.rerun()
 
 # ── SIDEBAR ──────────────────────────────────────────────────────────────────
-if st.session_state.show_sidebar:
-  with st.sidebar:
+with st.sidebar:
 
     # Brand card
     st.markdown("""
