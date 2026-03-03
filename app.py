@@ -1,5 +1,6 @@
 import streamlit as st
 from orchestor import orchestrate_query
+from memory import clear_memory
 
 st.set_page_config(page_title="Modular RAG Q&A", layout="wide")
 
@@ -43,4 +44,5 @@ with st.sidebar:
     st.markdown("---")
     if st.button("🧹 Clear Chat History", use_container_width=True):
         st.session_state.messages = []
+        clear_memory(True)
         st.rerun()
