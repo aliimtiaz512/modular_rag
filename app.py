@@ -154,14 +154,36 @@ st.markdown("""
         border-color: #2e2e2e !important;
     }
 
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #1a1a1a; }
-    ::-webkit-scrollbar-thumb {
-        background: #404040;
-        border-radius: 999px;
+    /* ── SCROLLBAR — always visible, thick, styled ── */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track {
+        background: #252525;
+        border-radius: 8px;
     }
-    ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+    ::-webkit-scrollbar-thumb {
+        background: #14b8a6;
+        border-radius: 8px;
+        border: 2px solid #252525;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #0d9488;
+    }
+    ::-webkit-scrollbar-corner { background: #1a1a1a; }
+
+    /* ── SCROLLABLE CHAT AREA ── */
+    .chat-scroll-area {
+        max-height: 62vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding-right: 8px;
+        scrollbar-width: thin;
+        scrollbar-color: #14b8a6 #252525;
+    }
+
+    /* ── SPINNER color ── */
+    .stSpinner > div {
+        border-top-color: #14b8a6 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -178,9 +200,12 @@ st.markdown(
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Scrollable chat window
+st.markdown('<div class="chat-scroll-area">', unsafe_allow_html=True)
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
+st.markdown('</div>', unsafe_allow_html=True)
 
 if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -193,6 +218,8 @@ if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
     with st.chat_message("assistant"):
         st.markdown(answer)
         st.session_state.messages.append({"role": "assistant", "content": answer})
+
+    st.rerun()  # Refresh so new message appears inside scroll area
 
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
