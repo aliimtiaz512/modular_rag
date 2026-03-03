@@ -10,6 +10,7 @@ client=Groq(api_key=api_key)
 def generate_query(query:str, system_prompt:str):
     completion=client.chat.completions.create(
     model="openai/gpt-oss-120b",
+    max_tokens=200,
     messages=[
       {
         "role": "system",
@@ -24,4 +25,4 @@ def generate_query(query:str, system_prompt:str):
     return completion.choices[0].message.content
 
 if __name__ == "__main__":
-    print(generate_query("Hello, how are you?", "You are an assistant that helps users with their questions"))
+    print(generate_query("Hello, how are you?", "You are an assistant that helps users with their questions. Make the answers concise and informative."))
