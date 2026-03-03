@@ -24,6 +24,32 @@ st.markdown("""
     /* ── HIDE STREAMLIT CHROME ── */
     #MainMenu, footer, header { visibility: hidden; }
 
+    /* ── SIDEBAR TOGGLE BUTTON ── */
+    [data-testid="collapsedControl"] {
+        background-color: #e2faf8 !important;
+        border-radius: 0 10px 10px 0 !important;
+        border: 1px solid #14b8a6 !important;
+        border-left: none !important;
+        box-shadow: 2px 2px 10px rgba(20,184,166,0.25) !important;
+        width: 28px !important;
+        top: 50% !important;
+        transition: all 0.2s ease !important;
+    }
+
+    [data-testid="collapsedControl"]:hover {
+        background-color: #14b8a6 !important;
+        box-shadow: 2px 2px 16px rgba(20,184,166,0.5) !important;
+    }
+
+    [data-testid="collapsedControl"] svg {
+        fill: #0d9488 !important;
+        stroke: #0d9488 !important;
+    }
+
+    [data-testid="collapsedControl"]:hover svg {
+        fill: #ffffff !important;
+        stroke: #ffffff !important;
+    }
     /* ── TITLE ── */
     h1 {
         font-family: 'DM Sans', sans-serif !important;
