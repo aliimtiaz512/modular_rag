@@ -186,14 +186,44 @@ st.markdown("""
     /* ── SPINNER ── */
     .stSpinner > div { border-top-color: #2563eb !important; }
 
+    /* ── DARK MENU TOGGLE BUTTON ── */
+    div[data-testid="column"]:first-child .stButton > button {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        border-radius: 10px !important;
+        font-size: 20px !important;
+        padding: 8px 14px !important;
+        width: auto !important;
+        min-width: 48px !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.18) !important;
+        border: none !important;
+        margin-top: 6px !important;
+    }
+    div[data-testid="column"]:first-child .stButton > button:hover {
+        background-color: #0f172a !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+        transform: none !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
+# ── SESSION STATE FOR SIDEBAR ────────────────────────────────────────────────
+if "show_sidebar" not in st.session_state:
+    st.session_state.show_sidebar = True
+
 # ── HEADER ───────────────────────────────────────────────────────────────────
-col1, col2 = st.columns([8, 2])
-with col1:
+btn_col, title_col = st.columns([1, 11])
+with btn_col:
+    if st.button("☰", help="Open / close the sidebar"):
+        st.session_state.show_sidebar = not st.session_state.show_sidebar
+        st.rerun()
+
+with title_col:
     st.markdown("""
-    <div style="padding: 20px 0 6px 0;">
+    <div style="padding: 4px 0 6px 0;">
         <h1 style="margin:0;">🏢 Rizvi International Impex</h1>
         <p style="font-size:15px; margin:6px 0 0 0; color:#64748b;">
             Ask anything — powered by your internal knowledge base &amp; live web data.
@@ -242,60 +272,61 @@ if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
     st.rerun()
 
 # ── SIDEBAR ──────────────────────────────────────────────────────────────────
-with st.sidebar:
-    # Logo / Brand
-    st.markdown("""
-    <div style="
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        border-radius: 14px;
-        padding: 18px 16px;
-        margin-bottom: 20px;
-        text-align: center;
-    ">
-        <div style="font-size: 28px;">🏢</div>
-        <p style="color: #fff; font-weight: 700; font-size: 15px; margin: 6px 0 2px;">Rizvi International</p>
-        <p style="color: #bfdbfe; font-size: 12px; margin: 0;">AI-Powered Q&A</p>
-    </div>
-    """, unsafe_allow_html=True)
+if st.session_state.show_sidebar:
+    with st.sidebar:
+        # Logo / Brand
+        st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-radius: 14px;
+            padding: 18px 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        ">
+            <div style="font-size: 28px;">🏢</div>
+            <p style="color: #fff; font-weight: 700; font-size: 15px; margin: 6px 0 2px;">Rizvi International</p>
+            <p style="color: #bfdbfe; font-size: 12px; margin: 0;">AI-Powered Q&A</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    msg_count = len(st.session_state.messages)
+        msg_count = len(st.session_state.messages)
 
-    # Stats card
-    st.markdown(f"""
-    <div style="
-        background: #f0f9ff;
-        border: 1px solid #bae6fd;
-        border-radius: 12px;
-        padding: 14px 16px;
-        margin-bottom: 16px;
-    ">
-        <p style="font-size:12px; color:#0284c7; font-weight:600; margin:0 0 6px 0; text-transform:uppercase; letter-spacing:.05em;">Session Stats</p>
-        <p style="font-size:22px; font-weight:800; color:#0c4a6e; margin:0;">{msg_count}</p>
-        <p style="font-size:12px; color:#0369a1; margin:0;">messages exchanged</p>
-    </div>
-    """, unsafe_allow_html=True)
+        # Stats card
+        st.markdown(f"""
+        <div style="
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+        ">
+            <p style="font-size:12px; color:#0284c7; font-weight:600; margin:0 0 6px 0; text-transform:uppercase; letter-spacing:.05em;">Session Stats</p>
+            <p style="font-size:22px; font-weight:800; color:#0c4a6e; margin:0;">{msg_count}</p>
+            <p style="font-size:12px; color:#0369a1; margin:0;">messages exchanged</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown("---")
+        st.markdown("---")
 
-    st.markdown("""
-    <p style="font-size: 13px; color: #475569; font-weight: 600; margin-bottom: 6px;">⚙️ How It Works</p>
-    <p style="font-size: 12.5px; color: #64748b; line-height: 1.6;">
-        Your query is intelligently routed to either the
-        <strong style="color:#2563eb;">vector database</strong> or
-        <strong style="color:#16a34a;">live web extraction</strong>,
-        then answered by a large language model.
-    </p>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <p style="font-size: 13px; color: #475569; font-weight: 600; margin-bottom: 6px;">⚙️ How It Works</p>
+        <p style="font-size: 12.5px; color: #64748b; line-height: 1.6;">
+            Your query is intelligently routed to either the
+            <strong style="color:#2563eb;">vector database</strong> or
+            <strong style="color:#16a34a;">live web extraction</strong>,
+            then answered by a large language model.
+        </p>
+        """, unsafe_allow_html=True)
 
-    st.markdown("---")
+        st.markdown("---")
 
-    if st.button("🧹 Clear Chat History", use_container_width=True):
-        st.session_state.messages = []
-        clear_memory(True)
-        st.rerun()
+        if st.button("🧹 Clear Chat History", use_container_width=True):
+            st.session_state.messages = []
+            clear_memory(True)
+            st.rerun()
 
-    st.markdown("""
-    <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 24px;">
-        Rizvi International Impex © 2026
-    </p>
-    """, unsafe_allow_html=True)
+        st.markdown("""
+        <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 24px;">
+            Rizvi International Impex © 2026
+        </p>
+        """, unsafe_allow_html=True)
