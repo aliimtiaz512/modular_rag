@@ -1,14 +1,11 @@
 from groq import Groq
 import os
+from dotenv import load_dotenv
 
-# Load locally from .env if available (for development)
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
+# Load from .env for local development
+load_dotenv()
 
-# Try Streamlit secrets first (for Streamlit Cloud), then fall back to env var
+# On Streamlit Cloud, use st.secrets. Fallback to .env for local dev.
 try:
     import streamlit as st
     api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
