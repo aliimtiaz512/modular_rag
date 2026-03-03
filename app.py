@@ -274,59 +274,97 @@ if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
 # ── SIDEBAR ──────────────────────────────────────────────────────────────────
 if st.session_state.show_sidebar:
     with st.sidebar:
-        # Logo / Brand
+
+        # ── Brand Header ──
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 14px;
-            padding: 18px 16px;
-            margin-bottom: 20px;
+            padding: 20px 16px;
+            margin-bottom: 18px;
             text-align: center;
         ">
-            <div style="font-size: 28px;">🏢</div>
-            <p style="color: #fff; font-weight: 700; font-size: 15px; margin: 6px 0 2px;">Rizvi International</p>
-            <p style="color: #bfdbfe; font-size: 12px; margin: 0;">AI-Powered Q&A</p>
+            <div style="font-size: 32px; margin-bottom: 6px;">🏢</div>
+            <p style="color: #fff; font-weight: 700; font-size: 16px; margin: 0 0 2px;">Rizvi International Impex</p>
+            <p style="color: #bfdbfe; font-size: 12px; margin: 0; letter-spacing: 0.5px;">AI-Powered Knowledge Assistant</p>
         </div>
         """, unsafe_allow_html=True)
 
+        # ── Live Session Stats ──
         msg_count = len(st.session_state.messages)
+        user_msgs = len([m for m in st.session_state.messages if m["role"] == "user"])
+        ai_msgs = len([m for m in st.session_state.messages if m["role"] == "assistant"])
 
-        # Stats card
         st.markdown(f"""
-        <div style="
-            background: #f0f9ff;
-            border: 1px solid #bae6fd;
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin-bottom: 16px;
-        ">
-            <p style="font-size:12px; color:#0284c7; font-weight:600; margin:0 0 6px 0; text-transform:uppercase; letter-spacing:.05em;">Session Stats</p>
-            <p style="font-size:22px; font-weight:800; color:#0c4a6e; margin:0;">{msg_count}</p>
-            <p style="font-size:12px; color:#0369a1; margin:0;">messages exchanged</p>
+        <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:12px; padding:14px 16px; margin-bottom:14px;">
+            <p style="font-size:11px; color:#0284c7; font-weight:700; margin:0 0 10px; text-transform:uppercase; letter-spacing:.08em;">📊 Session Stats</p>
+            <div style="display:flex; justify-content:space-between; gap:8px;">
+                <div style="text-align:center; flex:1; background:#e0f2fe; border-radius:8px; padding:8px;">
+                    <p style="font-size:20px; font-weight:800; color:#0c4a6e; margin:0;">{user_msgs}</p>
+                    <p style="font-size:10px; color:#0369a1; margin:0;">You asked</p>
+                </div>
+                <div style="text-align:center; flex:1; background:#dcfce7; border-radius:8px; padding:8px;">
+                    <p style="font-size:20px; font-weight:800; color:#14532d; margin:0;">{ai_msgs}</p>
+                    <p style="font-size:10px; color:#16a34a; margin:0;">AI replied</p>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
+        # ── About This System ──
+        with st.expander("📖 About This System", expanded=False):
+            st.markdown("""
+            <p style="font-size:12.5px; color:#475569; line-height:1.7; margin:0;">
+                This is a <strong>Modular RAG</strong> (Retrieval-Augmented Generation) system
+                built for <strong>Rizvi International Impex</strong>. It combines a private
+                vector knowledge base (ChromaDB) with live web scraping to give intelligent,
+                accurate answers about the company.
+            </p>
+            """, unsafe_allow_html=True)
+
+        # ── How It Works ──
+        with st.expander("⚙️ How It Works", expanded=False):
+            st.markdown("""
+            <ol style="font-size:12.5px; color:#475569; line-height:1.9; margin:0; padding-left:16px;">
+                <li><strong style="color:#2563eb;">Router</strong> — Classifies your query type</li>
+                <li><strong style="color:#7c3aed;">Retriever</strong> — Fetches context from ChromaDB or scrapes a URL</li>
+                <li><strong style="color:#16a34a;">Generator</strong> — Groq LLM composes your answer</li>
+                <li><strong style="color:#d97706;">Memory</strong> — Remembers past Q&amp;As in this session</li>
+            </ol>
+            """, unsafe_allow_html=True)
+
+        # ── Capabilities ──
+        with st.expander("✅ What I Can Do", expanded=False):
+            st.markdown("""
+            <ul style="font-size:12.5px; color:#475569; line-height:1.9; margin:0; padding-left:16px;">
+                <li>Answer questions about Rizvi International Impex</li>
+                <li>Scrape &amp; summarize any website URL you share</li>
+                <li>Remember your conversation for follow-up questions</li>
+                <li>Route complex queries to the right data source</li>
+            </ul>
+            """, unsafe_allow_html=True)
+
+        # ── Tips ──
+        with st.expander("💡 Tips for Best Results", expanded=False):
+            st.markdown("""
+            <ul style="font-size:12.5px; color:#475569; line-height:1.9; margin:0; padding-left:16px;">
+                <li>Be specific — e.g. <em>"What products does Rizvi export?"</em></li>
+                <li>Paste a full URL to scrape any website for context</li>
+                <li>Clear chat history to start a fresh session</li>
+                <li>Short, focused questions get the best answers</li>
+            </ul>
+            """, unsafe_allow_html=True)
+
         st.markdown("---")
 
-        st.markdown("""
-        <p style="font-size: 13px; color: #475569; font-weight: 600; margin-bottom: 6px;">⚙️ How It Works</p>
-        <p style="font-size: 12.5px; color: #64748b; line-height: 1.6;">
-            Your query is intelligently routed to either the
-            <strong style="color:#2563eb;">vector database</strong> or
-            <strong style="color:#16a34a;">live web extraction</strong>,
-            then answered by a large language model.
-        </p>
-        """, unsafe_allow_html=True)
-
-        st.markdown("---")
-
+        # ── Clear Chat Button ──
         if st.button("🧹 Clear Chat History", use_container_width=True):
             st.session_state.messages = []
             clear_memory(True)
             st.rerun()
 
         st.markdown("""
-        <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 24px;">
+        <p style="font-size:11px; color:#94a3b8; text-align:center; margin-top:20px;">
             Rizvi International Impex © 2026
         </p>
         """, unsafe_allow_html=True)
