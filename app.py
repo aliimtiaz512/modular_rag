@@ -5,20 +5,20 @@ from memory import clear_memory
 st.set_page_config(
     page_title="Rizvi International Impex",
     layout="wide",
-    page_icon="🤖",
+    page_icon="🏢",
     initial_sidebar_state="expanded"
 )
 
-# ── CHARCOAL + TEAL THEME ────────────────────────────────────────────────────
+# ── LIGHT THEME ──────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
     /* ── BASE ── */
     html, body, .stApp {
-        background-color: #1a1a1a !important;
-        font-family: 'DM Sans', sans-serif !important;
-        color: #e8e8e8 !important;
+        background-color: #f5f7fa !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        color: #1e293b !important;
     }
 
     /* ── HIDE STREAMLIT CHROME ── */
@@ -26,179 +26,183 @@ st.markdown("""
 
     /* ── SIDEBAR TOGGLE BUTTON ── */
     [data-testid="collapsedControl"] {
-        background-color: #e2faf8 !important;
+        background-color: #2563eb !important;
         border-radius: 0 10px 10px 0 !important;
-        border: 1px solid #14b8a6 !important;
-        border-left: none !important;
-        box-shadow: 2px 2px 10px rgba(20,184,166,0.25) !important;
-        width: 28px !important;
-        top: 50% !important;
+        border: none !important;
+        box-shadow: 2px 2px 12px rgba(37,99,235,0.35) !important;
+        width: 26px !important;
         transition: all 0.2s ease !important;
     }
-
     [data-testid="collapsedControl"]:hover {
-        background-color: #14b8a6 !important;
-        box-shadow: 2px 2px 16px rgba(20,184,166,0.5) !important;
+        background-color: #1d4ed8 !important;
+        box-shadow: 2px 2px 18px rgba(37,99,235,0.55) !important;
     }
-
     [data-testid="collapsedControl"] svg {
-        fill: #0d9488 !important;
-        stroke: #0d9488 !important;
-    }
-
-    [data-testid="collapsedControl"]:hover svg {
         fill: #ffffff !important;
         stroke: #ffffff !important;
     }
+
     /* ── TITLE ── */
     h1 {
-        font-family: 'DM Sans', sans-serif !important;
-        font-size: 2.2rem !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.03em !important;
-        color: #f0f0f0 !important;
-        border-left: 4px solid #14b8a6;
-        padding-left: 16px !important;
-        margin-bottom: 6px !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-size: 2rem !important;
+        font-weight: 800 !important;
+        color: #1e293b !important;
+        letter-spacing: -0.04em !important;
+        margin-bottom: 4px !important;
     }
 
     h2, h3, h4 {
-        font-family: 'DM Sans', sans-serif !important;
-        color: #e0e0e0 !important;
-        font-weight: 600 !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        color: #1e293b !important;
+        font-weight: 700 !important;
     }
 
     p, li {
-        color: #b0b0b0 !important;
-        font-family: 'DM Sans', sans-serif !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        color: #475569 !important;
         line-height: 1.7 !important;
     }
 
     /* ── CHAT MESSAGES ── */
     [data-testid="stChatMessage"] {
-        border-radius: 14px !important;
+        border-radius: 16px !important;
         padding: 1.1rem 1.4rem !important;
         margin-bottom: 12px !important;
-        transition: box-shadow 0.2s ease !important;
+        transition: box-shadow 0.2s ease, transform 0.2s ease !important;
     }
 
-    /* User message — warm amber accent */
+    /* User message */
     [data-testid="stChatMessage"]:nth-child(even) {
-        background-color: #252525 !important;
-        border: 1px solid #333 !important;
-        border-top: 3px solid #f59e0b !important;
-        box-shadow: 0 2px 12px rgba(245,158,11,0.08) !important;
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-left: 4px solid #2563eb !important;
+        box-shadow: 0 2px 12px rgba(37,99,235,0.07) !important;
     }
 
-    /* Assistant message — teal accent */
+    /* Assistant message */
     [data-testid="stChatMessage"]:nth-child(odd) {
-        background-color: #222 !important;
-        border: 1px solid #2e2e2e !important;
-        border-top: 3px solid #14b8a6 !important;
-        box-shadow: 0 2px 12px rgba(20,184,166,0.08) !important;
+        background-color: #f0fdf4 !important;
+        border: 1px solid #bbf7d0 !important;
+        border-left: 4px solid #16a34a !important;
+        box-shadow: 0 2px 12px rgba(22,163,74,0.07) !important;
     }
 
     [data-testid="stChatMessage"]:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.35) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08) !important;
     }
+
+    /* ── SCROLLABLE CHAT AREA ── */
+    .chat-scroll-area {
+        max-height: 60vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding-right: 6px;
+        scrollbar-width: thin;
+        scrollbar-color: #93c5fd #e2e8f0;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track {
+        background: #e2e8f0;
+        border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #93c5fd;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
 
     /* ── CHAT INPUT ── */
     .stChatInputContainer {
-        background-color: #252525 !important;
-        border: 1px solid #404040 !important;
+        background-color: #ffffff !important;
+        border: 1.5px solid #cbd5e1 !important;
         border-radius: 16px !important;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.25) !important;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
     }
-
     .stChatInputContainer:focus-within {
-        border-color: #14b8a6 !important;
-        box-shadow: 0 4px 20px rgba(20,184,166,0.2) !important;
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.12),
+                    0 4px 16px rgba(37,99,235,0.1) !important;
     }
 
     textarea, input {
         background-color: transparent !important;
-        color: #e8e8e8 !important;
+        color: #1e293b !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
 
     /* ── SIDEBAR ── */
     [data-testid="stSidebar"] {
-        background-color: #141414 !important;
-        border-right: 1px solid #2e2e2e !important;
+        background-color: #ffffff !important;
+        border-right: 1px solid #e2e8f0 !important;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.04) !important;
     }
 
     /* ── BUTTONS ── */
     .stButton > button {
-        font-family: 'DM Sans', sans-serif !important;
-        background-color: #14b8a6 !important;
-        color: #0a0a0a !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        background-color: #2563eb !important;
+        color: #ffffff !important;
         border: none !important;
         border-radius: 10px !important;
         padding: 10px 20px !important;
         font-weight: 600 !important;
         font-size: 14px !important;
         width: 100% !important;
-        box-shadow: 0 4px 16px rgba(20,184,166,0.3) !important;
+        box-shadow: 0 4px 14px rgba(37,99,235,0.3) !important;
         transition: all 0.2s ease !important;
     }
-
     .stButton > button:hover {
-        background-color: #0d9488 !important;
-        box-shadow: 0 6px 22px rgba(20,184,166,0.45) !important;
+        background-color: #1d4ed8 !important;
+        box-shadow: 0 6px 20px rgba(37,99,235,0.45) !important;
         transform: translateY(-1px) !important;
         color: #fff !important;
         border: none !important;
     }
 
     /* ── DIVIDERS ── */
-    hr {
-        border-color: #2e2e2e !important;
-    }
+    hr { border-color: #e2e8f0 !important; }
 
-    /* ── SCROLLBAR — always visible, thick, styled ── */
-    ::-webkit-scrollbar { width: 10px; height: 10px; }
-    ::-webkit-scrollbar-track {
-        background: #252525;
-        border-radius: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #14b8a6;
-        border-radius: 8px;
-        border: 2px solid #252525;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #0d9488;
-    }
-    ::-webkit-scrollbar-corner { background: #1a1a1a; }
+    /* ── SPINNER ── */
+    .stSpinner > div { border-top-color: #2563eb !important; }
 
-    /* ── SCROLLABLE CHAT AREA ── */
-    .chat-scroll-area {
-        max-height: 62vh;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        padding-right: 8px;
-        scrollbar-width: thin;
-        scrollbar-color: #14b8a6 #252525;
-    }
-
-    /* ── SPINNER color ── */
-    .stSpinner > div {
-        border-top-color: #14b8a6 !important;
-    }
 </style>
 """, unsafe_allow_html=True)
 
-# ── HEADER ────────────────────────────────────────────────────────────────────
-st.title("🤖 Rizvi International Impex")
-st.markdown(
-    "<p style='font-size:15px; margin-top:-4px; margin-bottom:28px;'>"
-    "Ask anything — powered by your internal knowledge base &amp; live web data."
-    "</p>",
-    unsafe_allow_html=True
-)
+# ── HEADER ───────────────────────────────────────────────────────────────────
+col1, col2 = st.columns([8, 2])
+with col1:
+    st.markdown("""
+    <div style="padding: 20px 0 6px 0;">
+        <h1 style="margin:0;">🏢 Rizvi International Impex</h1>
+        <p style="font-size:15px; margin:6px 0 0 0; color:#64748b;">
+            Ask anything — powered by your internal knowledge base &amp; live web data.
+        </p>
+    </div>
+    <hr style="margin: 16px 0 20px 0;" />
+    """, unsafe_allow_html=True)
 
-# ── CHAT STATE ────────────────────────────────────────────────────────────────
+# ── CHAT STATE ───────────────────────────────────────────────────────────────
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+# Empty state
+if not st.session_state.messages:
+    st.markdown("""
+    <div style="
+        text-align: center;
+        padding: 60px 20px;
+        color: #94a3b8;
+    ">
+        <div style="font-size: 48px; margin-bottom: 12px;">💬</div>
+        <p style="font-size: 18px; font-weight: 600; color: #64748b; margin:0;">No messages yet</p>
+        <p style="font-size: 14px; margin-top:6px;">Type a question below to get started.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Scrollable chat window
 st.markdown('<div class="chat-scroll-area">', unsafe_allow_html=True)
@@ -219,30 +223,54 @@ if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
         st.markdown(answer)
         st.session_state.messages.append({"role": "assistant", "content": answer})
 
-    st.rerun()  # Refresh so new message appears inside scroll area
+    st.rerun()
 
-# ── SIDEBAR ───────────────────────────────────────────────────────────────────
+# ── SIDEBAR ──────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown(
-        "<h2 style='font-size:17px; color:#e0e0e0 !important; margin-bottom:4px;'>🛠 Controls</h2>",
-        unsafe_allow_html=True
-    )
-    st.markdown("---")
+    # Logo / Brand
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        border-radius: 14px;
+        padding: 18px 16px;
+        margin-bottom: 20px;
+        text-align: center;
+    ">
+        <div style="font-size: 28px;">🏢</div>
+        <p style="color: #fff; font-weight: 700; font-size: 15px; margin: 6px 0 2px;">Rizvi International</p>
+        <p style="color: #bfdbfe; font-size: 12px; margin: 0;">AI-Powered Q&A</p>
+    </div>
+    """, unsafe_allow_html=True)
 
     msg_count = len(st.session_state.messages)
-    st.markdown(
-        f"<p style='font-size:13px;'>💬 Messages this session: "
-        f"<strong style='color:#14b8a6;'>{msg_count}</strong></p>",
-        unsafe_allow_html=True
-    )
+
+    # Stats card
+    st.markdown(f"""
+    <div style="
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+    ">
+        <p style="font-size:12px; color:#0284c7; font-weight:600; margin:0 0 6px 0; text-transform:uppercase; letter-spacing:.05em;">Session Stats</p>
+        <p style="font-size:22px; font-weight:800; color:#0c4a6e; margin:0;">{msg_count}</p>
+        <p style="font-size:12px; color:#0369a1; margin:0;">messages exchanged</p>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("---")
 
-    st.markdown(
-        "<p style='font-size:13px;'><strong style='color:#e0e0e0;'>How it works</strong><br>"
-        "Your query is routed to either the vector database or live web extraction, "
-        "then answered by an LLM.</p>",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <p style="font-size: 13px; color: #475569; font-weight: 600; margin-bottom: 6px;">⚙️ How It Works</p>
+    <p style="font-size: 12.5px; color: #64748b; line-height: 1.6;">
+        Your query is intelligently routed to either the
+        <strong style="color:#2563eb;">vector database</strong> or
+        <strong style="color:#16a34a;">live web extraction</strong>,
+        then answered by a large language model.
+    </p>
+    """, unsafe_allow_html=True)
+
     st.markdown("---")
 
     if st.button("🧹 Clear Chat History", use_container_width=True):
@@ -250,8 +278,8 @@ with st.sidebar:
         clear_memory(True)
         st.rerun()
 
-    st.markdown(
-        "<p style='font-size:11px; color:#555; margin-top:20px; text-align:center;'>"
-        "Rizvi International Impex © 2026</p>",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 24px;">
+        Rizvi International Impex © 2026
+    </p>
+    """, unsafe_allow_html=True)
