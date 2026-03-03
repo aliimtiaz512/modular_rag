@@ -21,25 +21,41 @@ st.markdown("""
         color: #1e293b !important;
     }
 
-    /* ── HIDE STREAMLIT CHROME ── */
-    #MainMenu, footer, header { visibility: hidden; }
+    /* ── HIDE STREAMLIT CHROME — only specific elements, NOT the whole header ── */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    /* Hide deploy button and toolbar items but NOT the sidebar toggle */
+    [data-testid="stToolbar"] { display: none; }
+    [data-testid="stDecoration"] { display: none; }
+    [data-testid="stStatusWidget"] { display: none; }
 
-    /* ── SIDEBAR TOGGLE BUTTON ── */
+    /* ── SIDEBAR TOGGLE BUTTON — make it very obvious ── */
     [data-testid="collapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
         background-color: #2563eb !important;
-        border-radius: 0 10px 10px 0 !important;
+        border-radius: 0 12px 12px 0 !important;
         border: none !important;
-        box-shadow: 2px 2px 12px rgba(37,99,235,0.35) !important;
-        width: 26px !important;
+        box-shadow: 3px 0 16px rgba(37,99,235,0.45) !important;
+        width: 32px !important;
+        min-height: 56px !important;
+        align-items: center !important;
+        justify-content: center !important;
         transition: all 0.2s ease !important;
+        cursor: pointer !important;
+        z-index: 9999 !important;
     }
     [data-testid="collapsedControl"]:hover {
         background-color: #1d4ed8 !important;
-        box-shadow: 2px 2px 18px rgba(37,99,235,0.55) !important;
+        box-shadow: 3px 0 22px rgba(37,99,235,0.65) !important;
+        width: 36px !important;
     }
     [data-testid="collapsedControl"] svg {
         fill: #ffffff !important;
         stroke: #ffffff !important;
+        width: 18px !important;
+        height: 18px !important;
     }
 
     /* ── TITLE ── */
