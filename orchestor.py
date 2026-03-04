@@ -36,7 +36,7 @@ CONTEXT: {context}
 
 QUERY: {query}
 
-INSTRUCTIONS: You are a helpful answering assistant. Use the provided CONTEXT to answer the user's QUERY accurately in concise and too the point manner.Generate the response in a single paragraph. If the user's query has already been answered previously in the 'Previous Conversation Context',give acknowledge that it was already answered. If you cannot answer it based on the CONTEXT, state that you do not have enough information.
+INSTRUCTIONS: You are a helpful and concise assistant. Your goal is to provide direct answers based on the CONTEXT. You must limit your entire response to a maximum of 4 to 5 sentences. Regardless of how many separate questions the user asks in a single QUERY, ensure you address all of them together within this strict sentence limit. Do not use line breaks or bullet points.
 """
 
     response = generate_query(query, prompt)
