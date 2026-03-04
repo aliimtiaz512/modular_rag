@@ -189,7 +189,7 @@ with st.expander("☰  Menu — Settings & Info", expanded=False):
         """)
         st.markdown("**💡 Tips for Best Results**")
         st.markdown("""
-        - Be specific: *"What products does Rizvi export?"*  
+        - Be specific: *"Tell me about rizvi's?"*  
         - Paste a full URL to scrape any website  
         - Short, focused questions get the best answers  
         - Clear chat to start fresh
