@@ -54,20 +54,31 @@ st.markdown("""
         transition: box-shadow 0.2s ease, transform 0.2s ease !important;
     }
     
-    /* User Message */
+    /* User Message (High Contrast Dark) */
     [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
-        background-color: #eff6ff !important; /* Premium pale blue */
-        border: 1px solid #bfdbfe !important;
-        border-left: 4px solid #3b82f6 !important; /* Blue 500 */
-        box-shadow: 0 2px 12px rgba(59,130,246,0.06) !important;
+        background-color: #1e293b !important; /* Dark Slate */
+        border: 1px solid #0f172a !important;
+        border-left: 5px solid #3b82f6 !important; /* Bright Blue Accent */
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15) !important;
+        color: #f8fafc !important; /* Standout White Text */
     }
     
-    /* AI Response */
+    /* Force text elements inside user message to be white */
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) p,
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) h1,
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) h2,
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) h3,
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) li {
+        color: #f8fafc !important; 
+    }
+    
+    /* AI Response (High Contrast Light) */
     [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
-        background-color: #f0fdf4 !important; /* Premium pale green */
-        border: 1px solid #bbf7d0 !important;
-        border-left: 4px solid #22c55e !important; /* Green 500 */
-        box-shadow: 0 2px 12px rgba(34,197,94,0.06) !important;
+        background-color: #ffffff !important; /* Pure White */
+        border: 1px solid #cbd5e1 !important; /* Defined Silver Border */
+        border-left: 5px solid #10b981 !important; /* Emerald Green Accent */
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08) !important;
+        color: #0f172a !important; /* Dark Slate Text */
     }
     [data-testid="stChatMessage"]:hover {
         transform: translateY(-1px) !important;
