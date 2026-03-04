@@ -53,17 +53,21 @@ st.markdown("""
         margin-bottom: 12px !important;
         transition: box-shadow 0.2s ease, transform 0.2s ease !important;
     }
-    [data-testid="stChatMessage"]:nth-child(even) {
+    
+    /* User Message (odd) */
+    [data-testid="stChatMessage"]:nth-child(odd) {
         background-color: #ffffff !important;
         border: 1px solid #e2e8f0 !important;
-        border-left: 4px solid #2563eb !important;
-        box-shadow: 0 2px 12px rgba(37,99,235,0.07) !important;
+        border-left: 4px solid #334155 !important; /* Slate 700 */
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04) !important;
     }
-    [data-testid="stChatMessage"]:nth-child(odd) {
-        background-color: #f0fdf4 !important;
-        border: 1px solid #bbf7d0 !important;
-        border-left: 4px solid #16a34a !important;
-        box-shadow: 0 2px 12px rgba(22,163,74,0.07) !important;
+    
+    /* AI Response (even) */
+    [data-testid="stChatMessage"]:nth-child(even) {
+        background-color: #f5f3ff !important; /* Premium subtle violet */
+        border: 1px solid #ede9fe !important;
+        border-left: 4px solid #8b5cf6 !important; /* Violet 500 */
+        box-shadow: 0 2px 12px rgba(139,92,246,0.08) !important;
     }
     [data-testid="stChatMessage"]:hover {
         transform: translateY(-1px) !important;
