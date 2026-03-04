@@ -54,16 +54,16 @@ st.markdown("""
         transition: box-shadow 0.2s ease, transform 0.2s ease !important;
     }
     
-    /* User Message (odd) */
-    [data-testid="stChatMessage"]:nth-child(odd) {
+    /* User Message */
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
         background-color: #eff6ff !important; /* Premium pale blue */
         border: 1px solid #bfdbfe !important;
         border-left: 4px solid #3b82f6 !important; /* Blue 500 */
         box-shadow: 0 2px 12px rgba(59,130,246,0.06) !important;
     }
     
-    /* AI Response (even) */
-    [data-testid="stChatMessage"]:nth-child(even) {
+    /* AI Response */
+    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
         background-color: #f0fdf4 !important; /* Premium pale green */
         border: 1px solid #bbf7d0 !important;
         border-left: 4px solid #22c55e !important; /* Green 500 */
@@ -223,16 +223,17 @@ if not st.session_state.messages:
 st.markdown('<div class="chat-box">', unsafe_allow_html=True)
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+        prefix = "**🗣️ You:**\n\n" if msg["role"] == "user" else "**🤖 Rizvi AI:**\n\n"
+        st.markdown(prefix + msg["content"])
 st.markdown('</div>', unsafe_allow_html=True)
 
 if prompt := st.chat_input("Ask a question about Rizvi International Impex…"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
-        st.markdown(prompt)
+        st.markdown(f"**🗣️ You:**\n\n{prompt}")
     with st.spinner("Thinking…"):
         answer = orchestrate_query(prompt)
     with st.chat_message("assistant"):
-        st.markdown(answer)
+        st.markdown(f"**🤖 Rizvi AI:**\n\n{answer}")
         st.session_state.messages.append({"role": "assistant", "content": answer})
     st.rerun()
