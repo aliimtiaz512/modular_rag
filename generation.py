@@ -17,7 +17,7 @@ client = Groq(api_key=api_key)
 def generate_query(query:str, system_prompt:str):
     completion=client.chat.completions.create(
     model="openai/gpt-oss-120b",
-    max_tokens=200,
+    max_tokens=500,
     messages=[
       {
         "role": "system",
