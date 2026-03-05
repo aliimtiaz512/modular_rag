@@ -22,10 +22,15 @@ def orchestrate_query(query: str):
         if urls:
             url = urls[0]
             context = web_search(url)
-        else:
-            return "I am sorry, but I am Rizvi's assistant so I did not answer your question. This is out of my context. Please ask something related to Rizvi's website or information."
     elif "vector_db_query" in route_cleaned:
-        context = vector_db(query)
+        context, distance = vector_db(query)
+        
+        confidence_score = max(0.0, 100.0 * (1.0 - (distance / 2.0)))
+        
+        if confidence_score < 40.0:
+            msg = "I am sorry, I am agent of Rizvi's International Impex. Kindly question me about them."
+            add_to_memory(query, msg)
+            return msg
         
     memory_context = get_memory_context()
         
@@ -36,7 +41,7 @@ CONTEXT: {context}
 
 QUERY: {query}
 
-INSTRUCTIONS: You are a helpful answering assistant. Use the provided CONTEXT to answer the user's QUERY accurately in concise and too the point manner.Generate the response in a single paragraph.Don't add pre texts like "According to my context etc". If the user's query has already been answered previously in the 'Previous Conversation Context',give acknowledge that it was already answered. If you cannot answer it based on the CONTEXT, state that you do not have enough information.
+INSTRUCTIONS: You are a helpful answering assistant. Use the provided CONTEXT to answer the user's QUERY accurately in concise and too the point manner.Generate the response in a single paragraph.Don't add pre texts like "According to my context etc". If the user's query has already been answered previously in the 'Previous Conversation Context',don't mention text like that it is answered previously. If you cannot answer it based on the CONTEXT, state that you do not have enough information.
 """
 
     response = generate_query(query, prompt)

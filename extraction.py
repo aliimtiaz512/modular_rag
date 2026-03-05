@@ -1,16 +1,17 @@
-import requests
-from bs4 import BeautifulSoup
+import bs4
+from langchain_community.document_loaders import WebBaseLoader
 
-def extract_from_website(url):
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # Clean the noise
-        for junk in soup(["script", "style", "nav", "footer", "header"]):
-            junk.decompose()
-            
-        return soup.get_text(separator=' ', strip=True)
-    except Exception as e:
-        return f"Error on {url}: {e}"
+def extract_with_langchain(url):
+    loader = WebBaseLoader(
+        web_paths=[url],
+        bs_kwargs=dict(
+            parse_only=bs4.SoupStrainer(
+                name=["article", "main", "div", "p", "footer"]
+            )
+        )
+    )
+    
+    docs = loader.load()
+    
+    context = "\n\n".join([doc.page_content.strip() for doc in docs])
+    return context
